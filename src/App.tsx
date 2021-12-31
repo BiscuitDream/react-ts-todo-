@@ -4,6 +4,8 @@ import {TodoForm} from "./components/TodoForm";
 import {TodoList} from "./components/TodoList";
 import {ITodo} from "./interfaces";
 
+declare var confirm: (question: string) => boolean
+
 const App: React.FC = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
 
@@ -31,7 +33,10 @@ const App: React.FC = () => {
   };
 
   const removeHandler = (id: number) => {
-    setTodos(prev => prev.filter(todo => todo.id !== id));
+    const shouldRemove = confirm('Вы уверены, что хотите удалить элемент?');
+    if (shouldRemove) {
+      setTodos(prev => prev.filter(todo => todo.id !== id));
+    }
   };
 
   return <>
